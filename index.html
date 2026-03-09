@@ -3,381 +3,247 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Exposição Leonardo da Vinci | Galeria Virtual</title>
-    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700&family=Lora:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+    <title>Exposição Leonardo da Vinci</title>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&family=Playfair+Display:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
     <style>
         :root {
-            --bg-color: #f4f1ea;
-            --text-color: #2c241e;
-            --accent-color: #8b5a2b;
-            --card-bg: #ffffff;
+            /* Paleta de Cores Atualizada */
+            --bg-brown: #c5a47e; 
+            --dark-brown: #2b1d14; /* Marrom escuro e profundo */
+            --paper-color: #e3cca6;
+            --white-detail: #fdfbf7; /* Branco suave para detalhes */
         }
 
         body {
-            background-color: var(--bg-color);
-            color: var(--text-color);
-            font-family: 'Lora', serif;
+            background-color: var(--bg-brown);
+            color: var(--dark-brown);
+            font-family: 'Playfair Display', serif;
             margin: 0;
-            line-height: 1.6;
-            overflow-x: hidden;
-        }
-
-        header {
-            height: 100vh;
             display: flex;
             flex-direction: column;
-            justify-content: center;
-            align-items: center;
+            min-height: 100vh;
+        }
+
+        /* Cabeçalho Marrom Escuro com Texto Branco */
+        header {
             text-align: center;
-            background: linear-gradient(rgba(244, 241, 234, 0.8), rgba(244, 241, 234, 0.8)), 
-                        url('https://images.unsplash.com/photo-1579783902614-a3fb3927b6a5?q=80&w=2000') center/cover;
-            padding: 20px;
+            padding: 70px 20px;
+            background-color: var(--dark-brown);
+            color: var(--white-detail);
+            border-bottom: 3px solid var(--white-detail);
+            box-shadow: 0 4px 15px rgba(0,0,0,0.4);
         }
 
         h1 {
             font-family: 'Cinzel', serif;
-            font-size: 4rem;
-            margin-bottom: 0;
-            color: var(--accent-color);
+            font-size: 3.5rem;
+            margin: 0;
+            text-transform: uppercase;
+            letter-spacing: 4px;
+            font-weight: 600;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
         }
 
-        .subtitle {
+        header p {
             font-size: 1.2rem;
-            max-width: 600px;
-            margin-top: 20px;
+            font-style: italic;
+            margin-top: 15px;
+            letter-spacing: 1px;
+            color: #e0d5c1;
         }
 
-        .container {
-            max-width: 1000px;
-            margin: 0 auto;
-            padding: 50px 20px;
-        }
-
-        .section-title {
-            font-family: 'Cinzel', serif;
-            text-align: center;
-            font-size: 2.5rem;
-            margin-bottom: 50px;
-            border-bottom: 2px solid var(--accent-color);
-            display: inline-block;
-            left: 50%;
-            transform: translateX(-50%);
-            position: relative;
-        }
-
-        .artwork-card {
-            background: var(--card-bg);
-            margin-bottom: 80px;
-            border-radius: 8px;
-            overflow: hidden;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+        /* Menu de Navegação */
+        nav {
             display: flex;
-            flex-direction: column;
-            transition: transform 0.3s ease;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 15px;
+            padding: 25px;
+            background-color: var(--dark-brown);
+            border-bottom: 1px solid rgba(255,255,255,0.1);
         }
 
-        .artwork-card:hover {
-            transform: translateY(-5px);
-        }
-
-        .artwork-info {
-            padding: 40px;
-        }
-
-        .artwork-info h3 {
+        nav button {
+            background-color: var(--dark-brown);
+            border: 1px solid var(--white-detail);
+            color: var(--white-detail);
+            padding: 12px 25px;
+            cursor: pointer;
             font-family: 'Cinzel', serif;
-            color: var(--accent-color);
-            font-size: 1.8rem;
-            margin-top: 0;
+            font-size: 1rem;
+            letter-spacing: 1px;
+            transition: all 0.4s ease;
+            border-radius: 2px;
         }
 
-        footer {
-            text-align: center;
-            padding: 40px;
-            background: var(--text-color);
-            color: var(--bg-color);
-            font-family: 'Cinzel', serif;
+        nav button:hover, nav button.active {
+            background-color: var(--white-detail);
+            color: var(--dark-brown);
+            box-shadow: 0 0 10px rgba(253, 251, 247, 0.3);
+            transform: translateY(-2px);
         }
 
-        /* Estilo para simular as imagens se não houver links reais */
-        .img-placeholder {
+        /* Conteúdo das "Páginas" */
+        .content-section {
+            display: none;
+            max-width: 900px;
+            margin: 50px auto;
+            padding: 50px;
+            background: var(--paper-color);
+            border: 2px solid var(--dark-brown);
+            border-radius: 4px;
+            box-shadow: 0 15px 35px rgba(0,0,0,0.2);
+            animation: fadeIn 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .content-section.active {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(15px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .artwork-img {
             width: 100%;
-            height: 400px;
-            background: #ddd;
+            height: 450px;
+            background: #a67c52;
+            margin-bottom: 30px;
             display: flex;
             align-items: center;
             justify-content: center;
+            border: 4px solid var(--dark-brown);
             font-style: italic;
-            color: #888;
+            color: var(--white-detail);
+            font-family: 'Cinzel', serif;
+            font-size: 1.2rem;
+            box-shadow: inset 0 0 20px rgba(0,0,0,0.3);
         }
 
-        @media (min-width: 768px) {
-            .artwork-card { flex-direction: row; }
-            .artwork-card:nth-child(even) { flex-direction: row-reverse; }
-            .artwork-info { flex: 1; }
-            .img-placeholder { width: 50%; height: auto; min-height: 450px; }
+        /* Títulos Internos */
+        h2 {
+            font-family: 'Cinzel', serif;
+            font-size: 2.2rem;
+            color: var(--dark-brown);
+            text-align: center;
+            border-bottom: 1px solid var(--dark-brown);
+            padding-bottom: 15px;
+            margin-bottom: 25px;
+        }
+
+        .description {
+            font-size: 1.25rem;
+            line-height: 1.9;
+            text-align: justify;
+            color: #1a120c;
+        }
+
+        footer {
+            margin-top: auto;
+            text-align: center;
+            padding: 30px;
+            background-color: var(--dark-brown);
+            color: var(--white-detail);
+            font-family: 'Cinzel', serif;
+            font-size: 0.9rem;
+            letter-spacing: 1px;
+            border-top: 2px solid var(--white-detail);
         }
     </style>
 </head>
 <body>
 
-    <header data-aos="fade-in">
-        <h1>Leonardo da Vinci</h1>
-        <p class="subtitle" data-aos="fade-up" data-aos-delay="300">
-            A personificação do Homem Vitruviano: um gênio que dominou artes, ciências e engenharia com maestria[cite: 2].
-        </p>
-    </header>
+<header>
+    <h1>O Legado de Da Vinci</h1>
+    <p>A personificação do Homem Vitruviano</p>
+</header>
 
-    <div class="container">
-        <div style="text-align: center;">
-            <h2 class="section-title" data-aos="fade-up">Legado de Da Vinci</h2>
-            <p data-aos="fade-up">Sua curiosidade insaciável o tornou o maior ícone do Renascimento, unindo técnica rigorosa a uma observação profunda da natureza[cite: 3].</p>
-        </div>
+<nav>
+    <button class="active" onclick="openTab(event, 'inicio')">Início</button>
+    <button onclick="openTab(event, 'monalisa')">Mona Lisa</button>
+    <button onclick="openTab(event, 'vitruviano')">Homem Vitruviano</button>
+    <button onclick="openTab(event, 'ceia')">A Última Ceia</button>
+    <button onclick="openTab(event, 'arminho')">Dama com Arminho</button>
+    <button onclick="openTab(event, 'anunciacao')">A Anunciação</button>
+</nav>
 
-        <article class="artwork-card" data-aos="fade-right">
-            <div class="img-placeholder">Espaço para Imagem: Mona Lisa</div>
-            <div class="artwork-info">
-                <h3>Mona Lisa</h3>
-                <p>Famosa pelo mistério de seu sorriso e pela técnica do <strong>sfumato</strong>, que cria transições suaves entre cores e sombras[cite: 4, 5].</p>
-            </div>
-        </article>
+<div id="inicio" class="content-section active">
+    <h2>Bem-vindo à Exposição</h2>
+    <p class="description">
+        Leonardo da Vinci foi a personificação do Homem Vitruviano: um gênio que dominou artes, ciências e engenharia com a mesma maestria[cite: 2]. 
+        Sua curiosidade insaciável o tornou o maior ícone do Renascimento, unindo técnica rigorosa a uma observação profunda da natureza[cite: 3].
+    </p>
+</div>
 
-        <article class="artwork-card" data-aos="fade-left">
-            <div class="img-placeholder">Espaço para Imagem: Homem Vitruviano</div>
-            <div class="artwork-info">
-                <h3>O Homem Vitruviano</h3>
-                <p>Um desenho que simboliza a perfeição das proporções humanas e a união entre arte e matemática[cite: 6, 7].</p>
-            </div>
-        </article>
+<div id="monalisa" class="content-section">
+    <img src="img/mnl.jpg" height="100%" width="100%">
+    <h2>Mona Lisa</h2>
+    <p class="description">
+        Famosa pelo mistério de seu sorriso e pela técnica do <strong>sfumato</strong>, que cria transições suaves entre cores e sombras.
+    </p>
+</div>
 
-        <article class="artwork-card" data-aos="fade-right">
-            <div class="img-placeholder">Espaço para Imagem: A Última Ceia</div>
-            <div class="artwork-info">
-                <h3>A Última Ceia</h3>
-                <p>Um mural que revolucionou a perspectiva e a captura das emoções humanas em um momento dramático[cite: 8, 9].</p>
-            </div>
-        </article>
+<div id="vitruviano" class="content-section">
+    <img src="img/hvrt.jpg" height="100%" width="100%">
+    <h2>O Homem Vitruviano</h2>
+    <p class="description">
+        Um desenho que simboliza a perfeição das proporções humanas e a união entre arte e matemática[cite: 6, 7].
+    </p>
+</div>
 
-        <article class="artwork-card" data-aos="fade-left">
-            <div class="img-placeholder">Espaço para Imagem: A Dama com Arminho</div>
-            <div class="artwork-info">
-                <h3>A Dama com Arminho</h3>
-                <p>Retrato de Cecilia Gallerani, amante de Ludovico Sforza[cite: 10]. A obra é notável pela pose dinâmica da modelo e pelo arminho, que simboliza pureza[cite: 11].</p>
-            </div>
-        </article>
+<div id="ceia" class="content-section">
+    <div class="artwork-img">Imagem: A Última Ceia</div>
+    <h2>A Última Ceia</h2>
+    <p class="description">
+        Um mural que revolucionou a perspectiva e a captura das emoções humanas em um momento dramático[cite: 8, 9].
+    </p>
+</div>
 
-        <article class="artwork-card" data-aos="fade-right">
-            <div class="img-placeholder">Espaço para Imagem: A Anunciação</div>
-            <div class="artwork-info">
-                <h3>A Anunciação</h3>
-                <p>Uma de suas primeiras obras como aprendiz de Verrocchio[cite: 12]. Já demonstra sua atenção aos detalhes botânicos e ao uso da luz para criar profundidade[cite: 13].</p>
-            </div>
-        </article>
-    </div>
+<div id="arminho" class="content-section">
+    <div class="artwork-img">Imagem: A Dama com Arminho</div>
+    <h2>A Dama com Arminho</h2>
+    <p class="description">
+        Um retrato de Cecilia Gallerani, amante de Ludovico Sforza, Duque de Milão[cite: 10]. 
+        A obra é notável pela pose dinâmica da modelo, que parece olhar para algo fora da tela, e pelo arminho, que simboliza pureza[cite: 11].
+    </p>
+</div>
 
-    <footer>
-        <p>Exposição Virtual &copy; 2026 - O Legado de Da Vinci [cite: 1]</p>
-    </footer>
+<div id="anunciacao" class="content-section">
+    <div class="artwork-img">Imagem: A Anunciação</div>
+    <h2>A Anunciação</h2>
+    <p class="description">
+        Uma de suas primeiras obras, pintada enquanto ainda era aprendiz de Verrocchio, mostra o anjo Gabriel visitando a Virgem Maria em um jardim[cite: 12]. 
+        Já demonstra sua atenção aos detalhes botânicos e ao uso da luz para criar profundidade[cite: 13].
+    </p>
+</div>
 
-    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
-    <script>
-        AOS.init({
-            duration: 1000,
-            once: true,
-            easing: 'ease-in-out'
-        });
-    </script>
-</body>
-</html><!DOCTYPE html>
-<html lang="pt-br">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Exposição Leonardo da Vinci | Galeria Virtual</title>
-    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700&family=Lora:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
-    <style>
-        :root {
-            --bg-color: #f4f1ea;
-            --text-color: #2c241e;
-            --accent-color: #8b5a2b;
-            --card-bg: #ffffff;
+<footer>
+    Exposição Virtual &copy; 2026 - O Legado de Da Vinci - Rafael Lopes de Paula
+</footer>
+
+<script>
+    function openTab(evt, tabName) {
+        var i, content, tablinks;
+        
+        content = document.getElementsByClassName("content-section");
+        for (i = 0; i < content.length; i++) {
+            content[i].style.display = "none";
+            content[i].classList.remove("active");
         }
-
-        body {
-            background-color: var(--bg-color);
-            color: var(--text-color);
-            font-family: 'Lora', serif;
-            margin: 0;
-            line-height: 1.6;
-            overflow-x: hidden;
+        
+        tablinks = document.getElementsByTagName("button");
+        for (i = 0; i < tablinks.length; i++) {
+            tablinks[i].className = tablinks[i].className.replace(" active", "");
         }
+        
+        document.getElementById(tabName).style.display = "block";
+        setTimeout(() => {
+            document.getElementById(tabName).classList.add("active");
+        }, 10);
+        evt.currentTarget.className += " active";
+    }
+</script>
 
-        header {
-            height: 100vh;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            text-align: center;
-            background: linear-gradient(rgba(244, 241, 234, 0.8), rgba(244, 241, 234, 0.8)), 
-                        url('https://images.unsplash.com/photo-1579783902614-a3fb3927b6a5?q=80&w=2000') center/cover;
-            padding: 20px;
-        }
-
-        h1 {
-            font-family: 'Cinzel', serif;
-            font-size: 4rem;
-            margin-bottom: 0;
-            color: var(--accent-color);
-        }
-
-        .subtitle {
-            font-size: 1.2rem;
-            max-width: 600px;
-            margin-top: 20px;
-        }
-
-        .container {
-            max-width: 1000px;
-            margin: 0 auto;
-            padding: 50px 20px;
-        }
-
-        .section-title {
-            font-family: 'Cinzel', serif;
-            text-align: center;
-            font-size: 2.5rem;
-            margin-bottom: 50px;
-            border-bottom: 2px solid var(--accent-color);
-            display: inline-block;
-            left: 50%;
-            transform: translateX(-50%);
-            position: relative;
-        }
-
-        .artwork-card {
-            background: var(--card-bg);
-            margin-bottom: 80px;
-            border-radius: 8px;
-            overflow: hidden;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.05);
-            display: flex;
-            flex-direction: column;
-            transition: transform 0.3s ease;
-        }
-
-        .artwork-card:hover {
-            transform: translateY(-5px);
-        }
-
-        .artwork-info {
-            padding: 40px;
-        }
-
-        .artwork-info h3 {
-            font-family: 'Cinzel', serif;
-            color: var(--accent-color);
-            font-size: 1.8rem;
-            margin-top: 0;
-        }
-
-        footer {
-            text-align: center;
-            padding: 40px;
-            background: var(--text-color);
-            color: var(--bg-color);
-            font-family: 'Cinzel', serif;
-        }
-
-        /* Estilo para simular as imagens se não houver links reais */
-        .img-placeholder {
-            width: 100%;
-            height: 400px;
-            background: #ddd;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-style: italic;
-            color: #888;
-        }
-
-        @media (min-width: 768px) {
-            .artwork-card { flex-direction: row; }
-            .artwork-card:nth-child(even) { flex-direction: row-reverse; }
-            .artwork-info { flex: 1; }
-            .img-placeholder { width: 50%; height: auto; min-height: 450px; }
-        }
-    </style>
-</head>
-<body>
-
-    <header data-aos="fade-in">
-        <h1>Leonardo da Vinci</h1>
-        <p class="subtitle" data-aos="fade-up" data-aos-delay="300">
-            A personificação do Homem Vitruviano: um gênio que dominou artes, ciências e engenharia com maestria[cite: 2].
-        </p>
-    </header>
-
-    <div class="container">
-        <div style="text-align: center;">
-            <h2 class="section-title" data-aos="fade-up">Legado de Da Vinci</h2>
-            <p data-aos="fade-up">Sua curiosidade insaciável o tornou o maior ícone do Renascimento, unindo técnica rigorosa a uma observação profunda da natureza[cite: 3].</p>
-        </div>
-
-        <article class="artwork-card" data-aos="fade-right">
-            <div class="img-placeholder">Espaço para Imagem: Mona Lisa</div>
-            <div class="artwork-info">
-                <h3>Mona Lisa</h3>
-                <p>Famosa pelo mistério de seu sorriso e pela técnica do <strong>sfumato</strong>, que cria transições suaves entre cores e sombras[cite: 4, 5].</p>
-            </div>
-        </article>
-
-        <article class="artwork-card" data-aos="fade-left">
-            <div class="img-placeholder">Espaço para Imagem: Homem Vitruviano</div>
-            <div class="artwork-info">
-                <h3>O Homem Vitruviano</h3>
-                <p>Um desenho que simboliza a perfeição das proporções humanas e a união entre arte e matemática[cite: 6, 7].</p>
-            </div>
-        </article>
-
-        <article class="artwork-card" data-aos="fade-right">
-            <div class="img-placeholder">Espaço para Imagem: A Última Ceia</div>
-            <div class="artwork-info">
-                <h3>A Última Ceia</h3>
-                <p>Um mural que revolucionou a perspectiva e a captura das emoções humanas em um momento dramático[cite: 8, 9].</p>
-            </div>
-        </article>
-
-        <article class="artwork-card" data-aos="fade-left">
-            <div class="img-placeholder">Espaço para Imagem: A Dama com Arminho</div>
-            <div class="artwork-info">
-                <h3>A Dama com Arminho</h3>
-                <p>Retrato de Cecilia Gallerani, amante de Ludovico Sforza[cite: 10]. A obra é notável pela pose dinâmica da modelo e pelo arminho, que simboliza pureza[cite: 11].</p>
-            </div>
-        </article>
-
-        <article class="artwork-card" data-aos="fade-right">
-            <div class="img-placeholder">Espaço para Imagem: A Anunciação</div>
-            <div class="artwork-info">
-                <h3>A Anunciação</h3>
-                <p>Uma de suas primeiras obras como aprendiz de Verrocchio[cite: 12]. Já demonstra sua atenção aos detalhes botânicos e ao uso da luz para criar profundidade[cite: 13].</p>
-            </div>
-        </article>
-    </div>
-
-    <footer>
-        <p>Exposição Virtual &copy; 2026 - O Legado de Da Vinci [cite: 1]</p>
-    </footer>
-
-    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
-    <script>
-        AOS.init({
-            duration: 1000,
-            once: true,
-            easing: 'ease-in-out'
-        });
-    </script>
 </body>
 </html>
